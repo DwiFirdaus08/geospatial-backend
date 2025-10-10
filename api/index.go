@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"posttest/geospatial-backend/config"
 	"posttest/geospatial-backend/router"
-	"strings"
 )
 
 // Handler adalah fungsi utama yang akan dieksekusi oleh Vercel
