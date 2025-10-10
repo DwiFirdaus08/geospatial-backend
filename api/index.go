@@ -6,23 +6,24 @@ import (
 	"net/http"
 	"posttest/geospatial-backend/config"
 	"posttest/geospatial-backend/router"
+	"strings"
 )
 
 // Handler adalah fungsi utama yang akan dieksekusi oleh Vercel
 func Handler(w http.ResponseWriter, r *http.Request) {
 	log.Println("Function Handler started for path:", r.URL.Path)
-
-	// --- LOGGING ---
-	log.Println("Attempting to connect to the database...")
+	
 	config.ConnectDB()
-	log.Println("Database connection function finished.") // Pesan ini mungkin tidak muncul jika ConnectDB panic
+	log.Println("Database connection function finished.")
 
-	// --- LOGGING ---
-	log.Println("Setting up router...")
 	mux := router.SetupRouter()
 	log.Println("Router setup complete.")
 
-	// Serahkan request ke router
-	mux.ServeHTTP(w, r)
+	// Buat handler baru yang akan menghapus prefix /api
+	// sebelum requestnya sampai ke router mux Anda.
+	prefixStripper := http.StripPrefix("/api", mux)
+
+	// Sekarang, jalankan request melalui prefixStripper
+	prefixStripper.ServeHTTP(w, r)
 	log.Println("ServeHTTP finished.")
 }
