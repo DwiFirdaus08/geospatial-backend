@@ -37,14 +37,11 @@ func ImportGeoJSONData() error {
     var documents []interface{}
     for _, featureFromFile := range featureCollectionFromFile.Features {
         // Konversi dari GeoJSONFeatureForFile ke struct model.Jalan
-        // Agar bisa disimpan dengan ID yang akan dibuat MongoDB
         jalanToInsert := model.Jalan{
             Type:       featureFromFile.Type,
             Properties: model.Properties{
-                // Di sini Anda harus memetakan properti dari file ke struct Properties Anda
-                // Contoh:
+                
                 NamaJalan: fmt.Sprintf("%v", featureFromFile.Properties["nama_jalan"]),
-                // Kondisi: fmt.Sprintf("%v", featureFromFile.Properties["kondisi"]), // Jika ada properti 'kondisi'
             },
             Geometry:   featureFromFile.Geometry,
         }
