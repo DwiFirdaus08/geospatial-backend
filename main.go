@@ -1,10 +1,10 @@
-// main.go
 package main
 
 import (
 	"flag"
 	"log"
 	"net/http"
+	"os"
 	"posttest/geospatial-backend/config"
 	"posttest/geospatial-backend/repository"
 	"posttest/geospatial-backend/router"
@@ -27,7 +27,11 @@ func main() {
 
 	router := router.SetupRouter()
 	
-	port := ":8080"
+	port := os.Getenv("PORT")
+	if port == "" {
+		port = "8080" 
+	}
+
 	log.Printf("Server is running on port %s\n", port)
-	log.Fatal(http.ListenAndServe(port, router))
+	log.Fatal(http.ListenAndServe(":"+port, router)) 
 }
