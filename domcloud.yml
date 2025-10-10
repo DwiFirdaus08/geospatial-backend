@@ -1,0 +1,12 @@
+source: https://github.com/DwiFirdaus08/geospatial-backend
+
+features:
+  - go
+
+commands:
+  - "go build -o app main.go" # Compile kode menjadi satu file bernama 'app'
+
+nginx:
+  passenger:
+    enabled: "on"
+    app_start_command: "./app" # Jalankan file yang sudah di-compile
